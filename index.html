@@ -2,635 +2,167 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FasterFast | Medrani Script Elite</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaitoon Lab | التنزيلات الرسمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #007aff;
-            --dark-bg: #0f172a;
-            --glass-bg: rgba(255, 255, 255, 0.8);
-        }
-        * { font-family: 'Cairo', sans-serif; transition: all 0.3s ease; }
-        body { margin: 0; padding: 0; overflow: hidden; background: #f4f7fe; }
-        body.dark-mode { background: #0b0f19; color: white; }
-
-        /* --- شاشة الانتظار (Splash) --- */
-        #splash-screen {
-            position: fixed; inset: 0; background: white; z-index: 10000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .bolt-icon {
-            font-size: 80px; color: var(--primary-blue);
-            animation: bolt-flash 1s infinite alternate;
-        }
-        @keyframes bolt-flash {
-            from { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 5px #007aff); }
-            to { opacity: 0.3; transform: scale(1.2); filter: drop-shadow(0 0 20px #007aff); }
+            --primary-color: #1e5c20;
+            --bg-color: #ffffff;
+            --table-header: #f4f4f4;
+            --border-color: #d1d5db;
+            --link-color: #0366d6;
         }
 
-        /* --- واجهة الدردشة المنبثقة (The Matrix Chat) --- */
-        #chat-modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-            z-index: 5000; display: none; align-items: center; justify-content: center;
-            backdrop-filter: blur(8px);
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #24292e;
         }
-        .chat-window {
-            width: 80%; height: 85vh; background: white; border-radius: 30px;
-            display: flex; flex-direction: column; position: relative;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.4); overflow: hidden;
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-        .chat-window.fullscreen { width: 100%; height: 100vh; border-radius: 0; }
-        .chat-window.minimized { height: 60px; width: 300px; position: fixed; bottom: 20px; right: 20px; }
 
-        /* عمود التمرير المنفصل للرسائل */
-        #messages-container {
-            flex: 1; overflow-y: auto !important; padding: 20px;
-            display: flex; flex-direction: column; gap: 12px; background: #fcfcfc;
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
         }
-        #messages-container::-webkit-scrollbar { width: 8px; }
-        #messages-container::-webkit-scrollbar-thumb { background: #007aff; border-radius: 10px; }
 
-        /* الفقاعات */
-        .bubble { max-width: 70%; padding: 12px 16px; border-radius: 20px; font-weight: 500; position: relative; }
-        .sent { align-self: flex-end; background: #007aff; color: white; border-bottom-right-radius: 2px; }
-        .received { align-self: flex-start; background: #e5e7eb; color: #1f2937; border-bottom-left-radius: 2px; }
+        header h1 { margin: 0; font-size: 24px; }
+        header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
 
-        /* --- الأزرار والقوائم --- */
-        .nav-card { cursor: pointer; padding: 15px; border-radius: 20px; text-align: center; background: white; border: 2px solid transparent; }
-        .nav-card.active { border-color: #007aff; background: #ebf5ff; }
-        
-        .dark-mode .nav-card { background: #1e293b; border: none; }
-        .dark-mode .glass-header { background: rgba(15, 23, 42, 0.9); }
+        .content { padding: 25px; }
 
-        .hidden { display: none !important; }
-        
-        /* تأثير النقر المطول للميكروفون */
-        .mic-recording { animation: pulse-red 1s infinite; color: #ef4444 !important; }
-        @keyframes pulse-red { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .info-text {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        /* تصميم الجدول المستوحى من 7-Zip */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #e1e4e8;
+            text-align: right;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) { background-color: #f6f8fa; }
+
+        .download-link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .download-link:hover { text-decoration: underline; }
+
+        .badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            background: #eee;
+            color: #444;
+        }
+
+        .os-icon { width: 16px; vertical-align: middle; margin-left: 8px; }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #6a737d;
+        }
     </style>
 </head>
-<body id="main-body">
+<body>
 
-    <div id="splash-screen">
-        <i class="fas fa-bolt bolt-icon"></i>
-        <h1 class="text-3xl font-black text-blue-600 mt-4 tracking-tighter">FASTERFAST</h1>
-    </div>
+<div class="container">
+    <header>
+        <h1>Zaitoon Lab - Download Center</h1>
+        <p>الإصدارات الرسمية والآمنة لتطبيقات Madrani DZ</p>
+    </header>
 
-    <div id="auth-screen" class="hidden fixed inset-0 bg-gray-50 z-[4000] flex items-center justify-center p-6 overflow-y-auto">
-        <div id="auth-initial" class="w-full max-w-sm text-center space-y-6">
-            <i class="fas fa-bolt text-6xl text-blue-600"></i>
-            <h2 class="text-4xl font-black">مرحباً بك</h2>
-            <div class="space-y-4">
-                <button onclick="showAuthForm('login')" class="w-full bg-blue-600 text-white p-5 rounded-3xl font-black text-xl shadow-xl">تسجيل الدخول</button>
-                <button onclick="showAuthForm('signup')" class="w-full bg-white text-blue-600 border-2 border-blue-600 p-5 rounded-3xl font-black text-xl">إنشاء حساب جديد</button>
-            </div>
-        </div>
+    <div class="content">
+        <div class="info-text">
+            <strong>Zaitoon Lab</strong> هو منصة توزيع البرمجيات المعتمدة. جميع الملفات المرفوعة هنا تم فحصها وتجهيزها للعمل بضغطة زر واحدة. (تنبيه لمستخدمي الحاسوب)،كيفية البدء في 3 خطوات: 💡
 
-        <div id="signup-form" class="hidden w-full max-w-md bg-white p-8 rounded-[40px] shadow-2xl space-y-4">
-            <h2 class="text-2xl font-black text-center mb-6">عضوية جديدة</h2>
-            <div class="flex flex-col items-center mb-4">
-                <img id="reg-preview" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="w-24 h-24 rounded-full border-4 border-blue-600 object-cover">
-                <button onclick="document.getElementById('reg-file').click()" class="text-blue-600 font-bold text-sm mt-2">اختر صورة البروفايل</button>
-                <input type="file" id="reg-file" hidden onchange="previewImg(this)">
-            </div>
-            <input type="text" id="reg-id" placeholder="المعرف (اسم المستخدم الحقيقي)" class="w-full p-4 bg-gray-100 rounded-2xl outline-none border-2 focus:border-blue-600 font-bold">
-            <input type="text" id="reg-nick" placeholder="الاسم الذي سيراه الناس" class="w-full p-4 bg-gray-100 rounded-2xl outline-none border-2 focus:border-blue-600 font-bold">
-            <input type="text" id="reg-phone" placeholder="رقم الهاتف (اختياري)" class="w-full p-4 bg-gray-100 rounded-2xl outline-none font-bold">
-            <input type="email" id="reg-email" placeholder="البريد الإلكتروني (اختياري)" class="w-full p-4 bg-gray-100 rounded-2xl outline-none font-bold">
-            <input type="password" id="reg-pass" placeholder="كلمة السر" class="w-full p-4 bg-gray-100 rounded-2xl outline-none border-2 focus:border-blue-600 font-bold">
-            <button onclick="handleSignup()" class="w-full bg-blue-600 text-white p-4 rounded-2xl font-black text-lg">تأكيد الحساب</button>
-            <button onclick="location.reload()" class="w-full text-gray-400 font-bold">إلغاء</button>
-        </div>
+الاستخراج: قم بفك ضغط الملف المحمل للحصول على مجلد التطبيق.
 
-        <div id="login-form" class="hidden w-full max-w-md bg-white p-8 rounded-[40px] shadow-2xl space-y-4">
-            <h2 class="text-2xl font-black text-center mb-6">دخول المستخدم</h2>
-            <input type="text" id="li-identifier" placeholder="المعرف، الهاتف، أو الإيميل" class="w-full p-4 bg-gray-100 rounded-2xl outline-none border-2 focus:border-blue-600 font-bold">
-            <input type="password" id="li-pass" placeholder="كلمة السر" class="w-full p-4 bg-gray-100 rounded-2xl outline-none border-2 focus:border-blue-600 font-bold">
-            <button onclick="handleLogin()" class="w-full bg-blue-600 text-white p-4 rounded-2xl font-black text-lg">دخول</button>
-            <button onclick="location.reload()" class="w-full text-gray-400 font-bold">إلغاء</button>
-        </div>
-    </div>
+التشغيل: افتح المجلد واضغط مرتين على أيقونة madranidz في الأسفل.
 
-    <div id="main-app" class="hidden h-screen flex flex-col">
-        <header class="p-5 glass-header border-b flex justify-between items-center bg-white/90 backdrop-blur-md sticky top-0 z-50">
-            <div class="flex items-center gap-2 text-blue-600 italic">
-                <i class="fas fa-bolt text-2xl animate-pulse"></i>
-                <span class="text-2xl font-black tracking-tighter">FASTERFAST</span>
-            </div>
+تخطي الحماية: إذا اعترض ويندوز التشغيل، اختر More Info ثم Run Anyway؛ تطبيقنا آمن ومفحوص بالكامل.
+
+        <h3>روابط التحميل المباشرة (v1.0.0):</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>الرابط</th>
+                    <th>النوع</th>
+                    <th>النظام المدعوم</th>
+                    <th>الحجم</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <tbody>
+            <tr>
+                <td><a href="https://www.dropbox.com/scl/fi/hxq2egcsjp6b898ayrji3/fasterfast-madrani-palastine-gaza-QUDS.zip?rlkey=xzy1avzed5cmqjg9hitgty9ui&st=k660ckp0&dl=1" class="btn-download" download>Download</a></td>
+                <td>ZIP / EXE</td>
+                <td>Windows (x64) 💻</td>
+                <td>100 MB</td>
+            </tr>
             
-            <div class="flex items-center gap-3">
-                <button onclick="toggleTheme()" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-moon"></i></button>
-                <button onclick="showSearch()" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-search"></i></button>
-                <button onclick="showDonation()" class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center"><i class="fas fa-heart"></i></button>
-                <button onclick="logout()" class="w-10 h-10 rounded-full bg-red-100 text-red-500 flex items-center justify-center"><i class="fas fa-power-off"></i></button>
-            </div>
-        </header>
+            <tr>
+                <td><a href="https://www.google.com/search?q=https://raw.githubusercontent.com/mmuuu0475-blip/madrani-dz/main/app-release.apk class="btn-download" download>Download APK</a></td>
+                <td>APK</td>
+                <td>Android Mobile 📱</td>
+                <td>الحجم1 ميجا</td>
+            </tr>
+        </tbody>
+            </tbody>
+        </table>
 
-        <main class="flex-1 overflow-y-auto p-4 pb-24">
-            <div id="view-users" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                </div>
-            <div id="view-friends" class="hidden grid grid-cols-1 gap-4">
-                <h3 class="font-black text-gray-400">الأصدقاء المتابعين</h3>
-            </div>
-            <div id="view-profile" class="hidden bg-white p-8 rounded-[40px] text-center shadow-sm">
-                <img id="me-av" src="" class="w-32 h-32 rounded-full mx-auto border-4 border-blue-600 object-cover">
-                <h2 id="me-name" class="text-2xl font-black mt-4">...</h2>
-                <p id="me-id" class="text-gray-400 font-bold">@...</p>
-            </div>
-            <div id="view-settings" class="hidden space-y-4">
-                <div class="p-6 bg-white rounded-3xl font-black flex justify-between">إشعارات التطبيق <span>On</span></div>
-                <div class="p-6 bg-white rounded-3xl font-black flex justify-between">خصوصية الحساب <span>Public</span></div>
-            </div>
-        </main>
-
-        <footer class="fixed bottom-0 inset-x-0 bg-white border-t p-4 flex justify-around items-center z-50">
-            <div onclick="switchView('users')" class="nav-card active" id="btn-users"><i class="fas fa-users text-xl"></i><p class="text-[10px] font-bold">المستخدمين</p></div>
-            <div onclick="switchView('friends')" class="nav-card" id="btn-friends"><i class="fas fa-user-friends text-xl"></i><p class="text-[10px] font-bold">الأصدقاء</p></div>
-<div onclick="requestJoinGroup()" class="nav-card text-gold-500" id="btn-vip-group">
-    <i class="fas fa-crown text-xl text-yellow-500"></i>
-    <p class="text-[10px] font-bold">المجموعة</p>
+        <div style="margin-top: 30px;">
+            <h3>المميزات الرئيسية:</h3>
+            <ul style="font-size: 14px; color: #555;">
+                <li>ضغط عالي جداً لتقليل استهلاك الباقة.</li>
+                <li>تكامل تام مع أنظمة التشغيل (أيقونات رسمية).</li>
+                <li>لا يحتاج إلى تثبيت (Portable) في نسخة الويندوز.</li>
+            </ul>
+        </div>
+    </div>
 </div>
-            <div onclick="switchView('profile')" class="nav-card" id="btn-profile"><i class="fas fa-user-circle text-xl"></i><p class="text-[10px] font-bold">البروفايل</p></div>
-            <div onclick="switchView('settings')" class="nav-card" id="btn-settings"><i class="fas fa-cog text-xl"></i><p class="text-[10px] font-bold">الإعدادات</p></div>
-        </footer>
 
-        <div class="fixed bottom-2 w-full text-center text-[8px] font-bold text-gray-300 pointer-events-none">
-            تم إنشاء التطبيق بواسطة شركة MEDRANI SCRIPTE
-        </div>
-    </div>
+<footer>
+    <p>بواسطة فريق medrani dz الهندسي. جميع الحقوق محفوظة © 2026</p>
+    <p><a href="https://github.com/mmuuu0475-blip/zaitoon-lab" style="color: #0366d6; text-decoration: none;">المستودع الرسمي على GitHub</a></p>
+</footer>
 
-    <div id="chat-modal-overlay">
-        <div class="chat-window" id="chat-win">
-            <header class="p-4 bg-blue-600 text-white flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <img id="chat-target-av" src="" class="w-10 h-10 rounded-full border-2 border-white/50">
-                    <h4 id="chat-target-name" class="font-black">...</h4>
-                </div>
-                <div class="flex gap-4 text-xl">
-                    <button onclick="windowState('min')"><i class="fas fa-minus"></i></button>
-                    <button onclick="windowState('max')"><i class="fas fa-expand-arrows-alt"></i></button>
-                    <button onclick="windowState('close')"><i class="fas fa-times text-red-300"></i></button>
-                </div>
-            </header>
-
-            <div id="messages-container"></div>
-
-            <footer class="p-4 bg-white border-t flex flex-col gap-2">
-                <div class="flex items-center gap-3">
-                    <button onclick="document.getElementById('msg-media').click()" class="text-blue-600 text-xl"><i class="fas fa-plus-circle"></i></button>
-                    <input type="file" id="msg-media" hidden multiple onchange="handleMedia(this.files)">
-                    <div class="flex-1 bg-gray-100 rounded-2xl px-4 py-2 flex items-center">
-                        <input type="text" id="msg-text" placeholder="اكتب رسالة..." class="bg-transparent flex-1 outline-none font-bold">
-                        <button id="mic-btn" class="text-gray-400 px-2 transition-all"><i class="fas fa-microphone text-xl"></i></button>
-                    </div>
-                    <button onclick="sendTextMessage()" class="bg-blue-600 text-white w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg"><i class="fas fa-paper-plane"></i></button>
-                </div>
-            </footer>
-        </div>
-    </div>
-
-    <div id="donate-modal" class="hidden fixed inset-0 bg-black/80 z-[10000] flex items-center justify-center p-6">
-        <div class="bg-white p-8 rounded-[40px] max-w-sm w-full text-center space-y-6">
-            <div class="text-red-500 text-6xl animate-bounce"><i class="fas fa-heart"></i></div>
-            <h2 class="text-2xl font-black text-gray-800">ادعم تطوير التطبيق</h2>
-            <div class="bg-blue-50 p-4 rounded-2xl space-y-2">
-                <p class="font-bold text-blue-800">عبئ الرصيد للأرقام التالية:</p>
-                <div class="text-xl font-black text-blue-600">0658328372</div>
-                <div class="text-xl font-black text-blue-600">0773089512</div>
-            </div>
-            <p class="text-gray-500 font-bold">دعمكم يساعدنا على الاستمرار وتقديم الأفضل دائماً.</p>
-            <button onclick="document.getElementById('donate-modal').classList.add('hidden')" class="w-full bg-gray-800 text-white p-4 rounded-2xl font-black">إغلاق</button>
-        </div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, onSnapshot, query, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        // إعدادات Firebase (يجب تبديلها ببياناتك الحقيقية)
-        const firebaseConfig = {
-            apiKey: "AIzaSyDijbDpv8Q34xaIbLxtZMhX5qjb2ztktSA",
-            authDomain: "mohamed-90a83.firebaseapp.com",
-            projectId: "mohamed-90a83",
-            storageBucket: "mohamed-90a83.firebasestorage.app",
-            messagingSenderId: "66873999336",
-            appId: "1:66873999336:web:b02c1eeca23f7abcba6e5d"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        let me = null;
-        let activeTarget = null;
-        let chatUnsub = null;
-        let mediaRecorder = null;
-        let audioChunks = [];
-        let tempAvatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-
-        // --- نظام Splash ---
-        setTimeout(() => {
-            document.getElementById('splash-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('splash-screen').classList.add('hidden');
-                checkSession();
-            }, 500);
-        }, 3000);
-
-        function checkSession() {
-            const saved = localStorage.getItem('ff_session');
-            if (saved) {
-                // محاكاة تسجيل دخول تلقائي
-                me = JSON.parse(saved);
-                startApp();
-            } else {
-                document.getElementById('auth-screen').classList.remove('hidden');
-            }
-        }
-
-        // --- إدارة الهوية ---
-        window.showAuthForm = (type) => {
-            document.getElementById('auth-initial').classList.add('hidden');
-            document.getElementById(type + '-form').classList.remove('hidden');
-        };
-
-        window.previewImg = async (input) => {
-            const file = input.files[0];
-            if(!file) return;
-            Swal.fire({ title: 'جاري رفع الصورة...', didOpen: () => Swal.showLoading() });
-            const fd = new FormData(); fd.append('file', file); fd.append('upload_preset', 'ml_default');
-            const res = await fetch("https://api.cloudinary.com/v1_1/dknsyhnrb/upload", { method: "POST", body: fd });
-            const data = await res.json();
-            tempAvatar = data.secure_url;
-            document.getElementById('reg-preview').src = tempAvatar;
-            Swal.close();
-        };
-
-        window.handleSignup = async () => {
-            const id = document.getElementById('reg-id').value.trim().toLowerCase();
-            const nick = document.getElementById('reg-nick').value.trim();
-            const pass = document.getElementById('reg-pass').value;
-            
-            if(!id || !nick || !pass) return Swal.fire('تنبيه', 'املأ الحقول الأساسية', 'warning');
-
-            const ref = doc(db, "users", id);
-            if((await getDoc(ref)).exists()) return Swal.fire('خطأ', 'المعرف مستخدم بالفعل', 'error');
-
-            me = { id, nick, av: tempAvatar, p: CryptoJS.SHA256(pass).toString(), 
-                   phone: document.getElementById('reg-phone').value,
-                   email: document.getElementById('reg-email').value };
-
-            await setDoc(ref, me);
-            localStorage.setItem('ff_session', JSON.stringify(me));
-            location.reload();
-        };
-
-window.handleLogin = async () => {
-    try {
-        const iden = document.getElementById('li-identifier').value.trim().toLowerCase();
-        const pass = document.getElementById('li-pass').value;
-        
-        // فحص ما إذا كانت المكتبة محملة
-        if (typeof CryptoJS === 'undefined') {
-            throw new Error("مكتبة التشفير محظورة من المتصفح!");
-        }
-
-        const hash = CryptoJS.SHA256(pass).toString();
-        const snap = await getDoc(doc(db, "users", iden));
-
-        if(snap.exists() && snap.data().p === hash) {
-            me = snap.data();
-            localStorage.setItem('ff_session', JSON.stringify(me));
-            startApp();
-        } else {
-            Swal.fire('فشل الدخول', 'المعرف أو كلمة السر غير صحيحة', 'error');
-        }
-    } catch (error) {
-        console.error(error);
-        Swal.fire('خطأ تقني', 'المتصفح يمنع تشغيل بعض الأكواد: ' + error.message, 'warning');
-    }
-};
-
-        // --- تشغيل التطبيق الرئيسي ---
-        function startApp() {
-            document.getElementById('auth-screen').classList.add('hidden');
-            document.getElementById('main-app').classList.remove('hidden');
-            document.getElementById('me-av').src = me.av;
-            document.getElementById('me-name').innerText = me.nick;
-            document.getElementById('me-id').innerText = '@' + me.id;
-            loadUsers();
-        }
-
-      function loadUsers() {
-    onSnapshot(collection(db, "users"), snap => {
-        const grid = document.getElementById('view-users');
-        grid.innerHTML = "";
-        snap.forEach(d => {
-            const u = d.data();
-            if(u.id === me.id) return;
-
-            // تحديد الحالة: إذا كان آخر نشاط أقل من دقيقتين نعتبره متصل
-            const isOnline = u.lastSeen && (Date.now() - u.lastSeen < 20000);
-            const statusText = isOnline ? "متصل الآن" : timeAgo(u.lastSeen);
-            const statusColor = isOnline ? "bg-green-500" : "bg-gray-400";
-
-            grid.innerHTML += `
-                <div onclick="openChat('${u.id}','${u.av}','${u.nick}')" class="p-4 bg-white rounded-3xl flex items-center justify-between shadow-sm cursor-pointer hover:scale-[1.02]">
-                    <div class="flex items-center gap-4">
-                        <div class="relative">
-<img src="${u.av || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" 
-     class="w-14 h-14 rounded-2xl object-cover shadow-md" 
-     onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
-                            <span class="absolute -bottom-1 -right-1 w-4 h-4 ${statusColor} border-2 border-white rounded-full"></span>
-                        </div>
-                        <div>
-                            <h4 class="font-black text-gray-800">${u.nick}</h4>
-                            <span class="text-[10px] font-bold text-gray-400 italic">${statusText}</span>
-                        </div>
-                    </div>
-                    <button class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl"><i class="fas fa-plus"></i></button>
-                </div>`;
-        });
-    });
-}
-// تحديث آخر ظهور كل دقيقة طالما التطبيق مفتوح
-setInterval(async () => {
-    if (me && me.id) {
-        await updateDoc(doc(db, "users", me.id), {
-            lastSeen: Date.now()
-        });
-    }
-}, 20000); // تحديث كل 60 ثانية
-window.openChat = (id, av, nick) => {
-    activeTarget = id;
-    document.getElementById('chat-target-name').innerText = nick;
-    document.getElementById('chat-target-av').src = av;
-    document.getElementById('chat-modal-overlay').style.display = 'flex';
-    
-    if(chatUnsub) chatUnsub(); // إلغاء الاشتراك السابق لمنع تداخل المحادثات
-    
-    const roomId = [me.id, activeTarget].sort().join('_');
-    const q = query(collection(db, "messages"), orderBy("ts", "asc"));
-
-    chatUnsub = onSnapshot(q, snap => {
-        const container = document.getElementById('messages-container');
-        container.innerHTML = "";
-        
-        snap.forEach(d => {
-            const m = d.data(); // تعريف البيانات أولاً
-
-            // 1. نظام التنبيهات (يظهر فقط إذا كانت الرسالة لي ولست فاتح محادثة المرسل حالياً)
-            if (m.receiver === me.id && m.sender !== activeTarget && m.ts > Date.now() - 5000) {
-                Swal.fire({
-                    toast: true, position: 'top-start', showConfirmButton: false,
-                    timer: 3000, icon: 'info', title: `رسالة جديدة من ${m.sender}`
-                });
-            }
-
-            // 2. عرض الرسائل (المرسل والمستقبل يريانها هنا)
-            if(m.room === roomId) {
-                const isMe = m.sender === me.id;
-                const div = document.createElement('div');
-                div.className = `bubble ${isMe ? 'sent' : 'received'}`;
-                
-                // إضافة محتوى الرسالة حسب نوعها
-                if(m.type === 'img') div.innerHTML = `<img src="${m.url}" class="w-32 rounded-lg mb-1" onclick="zoomMedia('${m.url}')">`;
-                else if(m.type === 'vid') div.innerHTML = `<video src="${m.url}" class="w-32 rounded-lg mb-1"></video>`;
-                else if(m.type === 'audio') div.innerHTML = `<div class="flex items-center gap-2" ondblclick="playAudio('${m.url}')"><i class="fas fa-play-circle text-2xl"></i> <span class="text-[9px]">اضغط 5 مرات لتشغيل الرسالة الصوتية</span></div>`;
-                
-                if(m.txt) div.innerHTML += `<div>${m.txt}</div>`;
-                container.appendChild(div);
-            }
-        });
-        container.scrollTop = container.scrollHeight;
-    });
-};
-
-        window.sendTextMessage = async () => {
-            const inp = document.getElementById('msg-text');
-            if(!inp.value.trim()) return;
-            await saveMessage(inp.value, 'text');
-            inp.value = "";
-        };
-
-        async function saveMessage(txt, type, url = "") {
-            await addDoc(collection(db, "messages"), {
-                room: [me.id, activeTarget].sort().join('_'),
-                sender: me.id, txt, type, url, ts: Date.now()
-            });
-        }
-
-        // --- الميكروفون المتقدم ---
-        const micBtn = document.getElementById('mic-btn');
-        let micAllowed = false;
-
-        micBtn.addEventListener('mousedown', async () => {
-            if(!micAllowed) {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                micAllowed = true;
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-                mediaRecorder.onstop = async () => {
-                    const blob = new Blob(audioChunks, { type: 'audio/mp3' });
-                    audioChunks = [];
-                    uploadFile(blob, 'audio');
-                };
-            }
-            audioChunks = [];
-            mediaRecorder.start();
-            micBtn.classList.add('mic-recording');
-        });
-
-        micBtn.addEventListener('mouseup', () => {
-            if(mediaRecorder && mediaRecorder.state === "recording") {
-                mediaRecorder.stop();
-                micBtn.classList.remove('mic-recording');
-            }
-        });
-
-        async function uploadFile(file, type) {
-            const fd = new FormData(); fd.append('file', file); fd.append('upload_preset', 'ml_default');
-            if(type === 'vid') fd.append('resource_type', 'video');
-            const res = await fetch(`https://api.cloudinary.com/v1_1/dknsyhnrb/upload`, { method: "POST", body: fd });
-            const data = await res.json();
-            saveMessage("", type, data.secure_url);
-        }
-
-        window.handleMedia = (files) => {
-            Array.from(files).forEach(f => {
-                const type = f.type.startsWith('image') ? 'img' : 'vid';
-                uploadFile(f, type);
-            });
-        };
-// وظيفة إظهار نافذة البحث
-window.showSearch = () => {
-    Swal.fire({
-        title: 'البحث عن مستخدمين',
-        input: 'text',
-        inputPlaceholder: 'اكتب المعرف أو الاسم هنا...',
-        showCancelButton: true,
-        confirmButtonText: 'بحث',
-        cancelButtonText: 'إلغاء',
-        inputAttributes: {
-            autocapitalize: 'off'
-        },
-        preConfirm: (username) => {
-            if (!username) {
-                Swal.showValidationMessage('يرجى كتابة اسم للبحث عنه');
-            }
-            return username.toLowerCase();
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // تنفيذ فلترة القائمة بناءً على النص المكتوب
-            const searchTerm = result.value;
-            filterUserList(searchTerm);
-        }
-    });
-};
-
-// وظيفة الفلترة الفعلية للقائمة
-function filterUserList(term) {
-    const grid = document.getElementById('view-users');
-    const cards = grid.getElementsByTagName('div');
-    let found = false;
-
-    // التأكد من أننا في واجهة المستخدمين
-    switchView('users');
-
-    Array.from(cards).forEach(card => {
-        const text = card.innerText.toLowerCase();
-        if (text.includes(term)) {
-            card.style.display = "flex";
-            found = true;
-        } else {
-            card.style.display = "none";
-        }
-    });
-
-    if (!found) {
-        Swal.fire('عذراً', 'لم يتم العثور على مستخدم بهذا الاسم', 'info');
-        // إعادة إظهار الكل بعد ثانيتين
-        setTimeout(() => {
-            Array.from(cards).forEach(c => c.style.display = "flex");
-        }, 2000);
-    }
-}
-        // --- وظائف عامة ---
-        window.switchView = (v) => {
-            ['users', 'friends', 'profile', 'settings'].forEach(id => {
-                document.getElementById('view-'+id).classList.add('hidden');
-                document.getElementById('btn-'+id).classList.remove('active');
-            });
-            document.getElementById('view-'+v).classList.remove('hidden');
-            document.getElementById('btn-'+v).classList.add('active');
-        };
-
-        window.toggleTheme = () => {
-            document.getElementById('main-body').classList.toggle('dark-mode');
-        };
-
-        window.showDonation = () => document.getElementById('donate-modal').classList.remove('hidden');
-
-        window.windowState = (state) => {
-            const win = document.getElementById('chat-win');
-            if(state === 'min') win.classList.add('minimized');
-            if(state === 'max') {
-                win.classList.remove('minimized');
-                win.classList.toggle('fullscreen');
-            }
-            if(state === 'close') document.getElementById('chat-modal-overlay').style.display = 'none';
-        };
-
-        window.playAudio = (url) => new Audio(url).play();
-        
-        window.zoomMedia = (url, type = 'img') => {
-            Swal.fire({
-                imageUrl: type === 'img' ? url : null,
-                html: type === 'vid' ? `<video src="${url}" controls autoplay class="w-full"></video>` : null,
-      
-          showCloseButton: true,
-                showConfirmButton: false,
-                width: '90%'
-            });
-        };
-
-        window.logout = () => { localStorage.clear(); location.reload(); };
-// دالة حساب الوقت المنقضي
-function timeAgo(timestamp) {
-    if (!timestamp || isNaN(timestamp)) return "غير نشط مسبقاً"; 
-    
-    const now = Date.now();
-    const diffInSeconds = Math.floor((now - timestamp) / 1000);
-
-    if (diffInSeconds < 60) return "منذ ثوانٍ";
-    
-    const minutes = Math.floor(diffInSeconds / 60);
-    if (minutes < 60) return `منذ ${minutes} دقيقة`;
-
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `منذ ${hours} ساعة`;
-    const days = Math.floor(hours / 24);
-    if (days === 1) return "منذ يوم واحد";
-    if (days === 2) return "منذ يومين";
-    return `منذ ${days} أيام`;
-}
-window.addEventListener('beforeunload', async () => {
-    if (me && me.id) {
-        // نستخدم طريقة سريعة لتحديث البيانات قبل الإغلاق
-        await updateDoc(doc(db, "users", me.id), {
-            lastSeen: Date.now()
-        });
-    }
-});
-// معرف الغرفة الثابت (يمكنك تغييره)
-const PRIVATE_ROOM_ID = "elite_room_001";
-
-window.requestJoinGroup = async () => {
-    const userRef = doc(db, "users", me.id);
-    const userSnap = await getDoc(userRef);
-    const userData = userSnap.data();
-
-    // 1. إذا كان المستخدم مقبولاً مسبقاً
-    if (userData.groupStatus === 'approved') {
-        openChat(PRIVATE_ROOM_ID, "https://cdn-icons-png.flaticon.com/512/606/606506.png", "الغرفة الخاصة", true);
-        return;
-    }
-
-    // 2. إذا كان الطلب تحت الانتظار
-    if (userData.groupStatus === 'pending') {
-        Swal.fire('انتظار', 'طلبك قيد المراجعة من قبل المطور', 'info');
-        return;
-    }
-
-    // 3. إرسال طلب جديد
-    Swal.fire({
-        title: 'الانضمام للغرفة الخاصة',
-        text: "هذه الغرفة للموافقة عليها من قبل المطور فقط. هل تريد إرسال طلب؟",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'إرسال طلب'
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-            await updateDoc(userRef, { groupStatus: 'pending' });
-            // إرسال إشعار لك (كمطور) في قاعدة البيانات
-            await addDoc(collection(db, "notifications"), {
-                from: me.nick,
-                fromId: me.id,
-                type: 'join_request',
-                ts: Date.now()
-            });
-            Swal.fire('تم الإرسال', 'سيصلك إشعار عند قبولك', 'success');
-        }
-    });
-};
-    </script>
 </body>
 </html>
